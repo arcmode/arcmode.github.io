@@ -1,6 +1,0 @@
-#+TITLE: Sample Title 2
-#+TAGS: hello world foo bar
-
-
-* Foo bar
-Lorem ipsum...

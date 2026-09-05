@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>arcmode</title>
+<title>Recipes</title>
 <script>
   (function () {
     var key = "recipes-theme";
-    var pref = localStorage.getItem(key) || "system";
+    var pref = localStorage.getItem(key) || localStorage.getItem("naranjita-theme") || "system";
     function resolved(p) {
       if (p === "light" || p === "dark") return p;
       return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
     }
     document.documentElement.setAttribute("data-theme", resolved(pref));
     document.documentElement.setAttribute("data-theme-pref", pref);
-    window.__siteTheme = {
+    window.__recipesTheme = {
       pref: pref,
       resolved: resolved,
       apply: function (p) {
@@ -35,9 +35,9 @@
     };
   })();
 </script>
-<link rel="preload" href="recipes/fonts/Literata.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="recipes/fonts/SpaceGrotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="recipes/fonts/fonts.css">
+<link rel="preload" href="fonts/Literata.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/SpaceGrotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
 <style>
   :root,
   html[data-theme="light"] {
@@ -204,13 +204,32 @@
     margin-bottom: 0.55rem;
   }
 
+  .meta {
+    margin: 0 0 1.1rem;
+    font-size: 0.84rem;
+    color: var(--ink-mute);
+  }
+  .meta b {
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  .lede {
+    margin: 0;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--line-strong);
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    max-width: 36rem;
+  }
+
   section { margin: 0 0 2.75rem; }
 
   h2 {
     font-family: "Literata", serif;
     font-size: 1.45rem;
     font-weight: 600;
-    margin: 0 0 0.85rem;
+    margin: 0 0 0.65rem;
     display: flex;
     align-items: baseline;
     gap: 0.65rem;
@@ -223,8 +242,22 @@
     transform: translateY(0.05rem);
   }
 
-  .link-list,
-  .socials {
+  .note {
+    margin: 0 0 1.2rem;
+    color: var(--ink-soft);
+    max-width: 40rem;
+  }
+
+  .stage {
+    margin: 0 0 0.45rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--culture);
+  }
+
+  .recipe-list {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -232,8 +265,7 @@
     gap: 0.85rem;
   }
 
-  .link-list a,
-  .socials a {
+  .recipe-list a {
     display: block;
     background: var(--panel);
     border: 1px solid var(--line);
@@ -243,14 +275,12 @@
     text-decoration: none;
     transition: border-color 0.15s ease;
   }
-  .link-list a:hover,
-  .socials a:hover {
+  .recipe-list a:hover {
     border-color: var(--accent);
     border-left-color: var(--accent);
   }
 
-  .link-list strong,
-  .socials strong {
+  .recipe-list strong {
     display: block;
     font-family: "Literata", serif;
     font-size: 1.15rem;
@@ -258,11 +288,25 @@
     margin-bottom: 0.35rem;
   }
 
-  .link-list span,
-  .socials span {
+  .recipe-list .blurb {
     display: block;
     font-size: 0.92rem;
     color: var(--ink-soft);
+    margin-bottom: 0.65rem;
+  }
+
+  .recipe-list .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.75rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .recipe-list .tags b {
+    color: var(--accent-deep);
+    font-weight: 600;
   }
 
   footer {
@@ -286,8 +330,8 @@
 <body>
 <div class="toolbar">
   <nav class="site-nav" aria-label="Site">
-    <a href="./" aria-current="page">Home</a>
-    <a href="recipes/">Recipes</a>
+    <a href="../">Home</a>
+    <a href="./" aria-current="page">Recipes</a>
   </nav>
   <button type="button" id="theme-toggle" aria-live="polite">
     Theme: <span class="pref" id="theme-pref-label">system</span>
@@ -296,63 +340,39 @@
 
 <main class="page">
   <header>
-    <h1 class="brand"><span>David Rojas Camaggi</span>arcmode</h1>
+    <h1 class="brand"><span>Homemade</span>Recipes</h1>
+    <p class="meta"><b>Small-batch</b> · Functional · Made at home</p>
+    <p class="lede">"Therefore, whether you are eating or drinking or doing anything else, do all things for God's glory." — 1 Corinthians 10:31.</p>
   </header>
 
   <section>
-    <h2>Pages</h2>
-    <ul class="link-list">
+    <h2>All recipes</h2>
+    <p class="note">Open a recipe to see ingredients, flowchart method tables, and functional notes.</p>
+    <p class="stage">Published</p>
+    <ul class="recipe-list">
       <li>
-        <a href="recipes/">
-          <strong>Recipes</strong>
-          <span>Small-batch, functional treats made at home.</span>
+        <a href="raw-tri-biotic-naranjita.html">
+          <strong>The Raw Tri-Biotic Naranjita</strong>
+          <span class="blurb">Orange-peel ferment with <i>L. plantarum</i>, then a white, dark, or milk chocolate coat.</span>
+          <span class="tags"><b>Sugar-free</b> · Zero glycemic · Live cultures</span>
+        </a>
+      </li>
+      <li>
+        <a href="fermented-garlic-paste.html">
+          <strong>Fermented Garlic Paste</strong>
+          <span class="blurb">Raw <i>L. plantarum</i> garlic paste, finished cold for GLP-1-minded use — stir in after cooking.</span>
+          <span class="tags"><b>GLP-1</b> · Live cultures · Raw finishing</span>
         </a>
       </li>
     </ul>
   </section>
 
-  <section>
-    <h2>Contact</h2>
-    <ul class="socials">
-      <li>
-        <a href="https://github.com/arcmode">
-          <strong>GitHub</strong>
-          <span>github.com/arcmode</span>
-        </a>
-      </li>
-      <li>
-        <a href="https://www.instagram.com/eldeibee">
-          <strong>Instagram</strong>
-          <span>@eldeibee</span>
-        </a>
-      </li>
-      <li>
-        <a href="https://x.com/_arcmode">
-          <strong>X</strong>
-          <span>@_arcmode</span>
-        </a>
-      </li>
-      <li>
-        <a href="https://www.linkedin.com/in/david-rojas-camaggi-a15409150">
-          <strong>LinkedIn</strong>
-          <span>David Rojas Camaggi</span>
-        </a>
-      </li>
-      <li>
-        <a href="mailto:drojascamaggi@gmail.com">
-          <strong>Email</strong>
-          <span>drojascamaggi@gmail.com</span>
-        </a>
-      </li>
-    </ul>
-  </section>
-
-  <footer>Nevada City, CA</footer>
+  <footer>Made at home · Keep cool · Live cultures</footer>
 </main>
 
 <script>
   (function () {
-    var t = window.__siteTheme;
+    var t = window.__recipesTheme;
     var label = document.getElementById("theme-pref-label");
     var btn = document.getElementById("theme-toggle");
 

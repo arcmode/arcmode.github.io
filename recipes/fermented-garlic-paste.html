@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fermented Garlic Paste</title>
+<script>
+  (function () {
+    var key = "recipes-theme";
+    var pref = localStorage.getItem(key) || localStorage.getItem("naranjita-theme") || "system";
+    function resolved(p) {
+      if (p === "light" || p === "dark") return p;
+      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    document.documentElement.setAttribute("data-theme", resolved(pref));
+    document.documentElement.setAttribute("data-theme-pref", pref);
+    window.__recipesTheme = {
+      pref: pref,
+      resolved: resolved,
+      apply: function (p) {
+        this.pref = p;
+        localStorage.setItem(key, p);
+        document.documentElement.setAttribute("data-theme-pref", p);
+        document.documentElement.setAttribute("data-theme", resolved(p));
+      },
+      label: function () {
+        if (this.pref === "light") return "Theme: light (click for dark)";
+        if (this.pref === "dark") return "Theme: dark (click for system)";
+        return "Theme: system (click for light)";
+      },
+      cycle: function () {
+        var order = ["system", "light", "dark"];
+        this.apply(order[(order.indexOf(this.pref) + 1) % order.length]);
+      }
+    };
+  })();
+</script>
+<link rel="preload" href="fonts/Literata.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/SpaceGrotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+  :root,
+  html[data-theme="light"] {
+    --bg: #f7f3ea;
+    --ink: #1f2a24;
+    --ink-soft: #4a5a52;
+    --ink-mute: #6f7f76;
+    --accent: #d4551a;
+    --accent-deep: #a63f10;
+    --culture: #2f7a4e;
+    --line: rgba(31, 42, 36, 0.14);
+    --line-strong: rgba(31, 42, 36, 0.28);
+    --panel: #fffdf8;
+    --grid: rgba(31, 42, 36, 0.035);
+    --glow-a: rgba(212, 85, 26, 0.12);
+    --glow-b: rgba(47, 122, 78, 0.08);
+    --banner: rgba(212, 85, 26, 0.08);
+    --vertical: rgba(47, 122, 78, 0.04);
+    --shadow: rgba(31, 42, 36, 0.06);
+    --toolbar: rgba(255, 253, 248, 0.72);
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #16110c;
+      --ink: #f3e6d4;
+      --ink-soft: #c4b19a;
+      --ink-mute: #8f7c68;
+      --accent: #e8943a;
+      --accent-deep: #f0a85a;
+      --culture: #7fad63;
+      --line: rgba(232, 148, 58, 0.22);
+      --line-strong: rgba(232, 148, 58, 0.4);
+      --panel: #1f1711;
+      --grid: rgba(243, 230, 212, 0.04);
+      --glow-a: rgba(232, 148, 58, 0.14);
+      --glow-b: rgba(127, 173, 99, 0.08);
+      --banner: rgba(232, 148, 58, 0.1);
+      --vertical: rgba(127, 173, 99, 0.06);
+      --shadow: rgba(0, 0, 0, 0.35);
+      --toolbar: rgba(22, 17, 12, 0.88);
+      color-scheme: dark;
+    }
+  }
+
+  html[data-theme="dark"] {
+    --bg: #16110c;
+    --ink: #f3e6d4;
+    --ink-soft: #c4b19a;
+    --ink-mute: #8f7c68;
+    --accent: #e8943a;
+    --accent-deep: #f0a85a;
+    --culture: #7fad63;
+    --line: rgba(232, 148, 58, 0.22);
+    --line-strong: rgba(232, 148, 58, 0.4);
+    --panel: #1f1711;
+    --grid: rgba(243, 230, 212, 0.04);
+    --glow-a: rgba(232, 148, 58, 0.14);
+    --glow-b: rgba(127, 173, 99, 0.08);
+    --banner: rgba(232, 148, 58, 0.1);
+    --vertical: rgba(127, 173, 99, 0.06);
+    --shadow: rgba(0, 0, 0, 0.35);
+    --toolbar: rgba(22, 17, 12, 0.88);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    color: var(--ink);
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 400;
+    line-height: 1.55;
+    background-color: var(--bg);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+      radial-gradient(ellipse 70% 45% at 100% 0%, var(--glow-a), transparent 55%),
+      radial-gradient(ellipse 50% 40% at 0% 100%, var(--glow-b), transparent 50%);
+    background-size: 28px 28px, 28px 28px, auto, auto;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 1rem;
+    background: var(--toolbar);
+    border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(8px);
+  }
+
+  .site-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .site-nav a {
+    color: var(--ink-soft);
+    font: 0.72rem/1 "Space Grotesk", sans-serif;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.45rem 0.7rem;
+  }
+  .site-nav a:hover,
+  .site-nav a[aria-current="page"] {
+    color: var(--accent);
+  }
+
+  #theme-toggle {
+    appearance: none;
+    border: 1px solid var(--line-strong);
+    background: var(--panel);
+    color: var(--ink-soft);
+    font: 0.72rem/1 "Space Grotesk", sans-serif;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.45rem 0.7rem;
+    cursor: pointer;
+  }
+  #theme-toggle:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  #theme-toggle .pref {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .page {
+    max-width: 50rem;
+    margin: 0 auto;
+    padding: 3rem 1.35rem 4rem;
+  }
+
+  header {
+    margin-bottom: 2.75rem;
+    padding: 1.75rem 1.5rem 1.6rem;
+    background: var(--panel);
+    border: 1px solid var(--line-strong);
+    box-shadow: 8px 8px 0 var(--shadow);
+  }
+
+  .brand {
+    font-family: "Literata", serif;
+    font-size: clamp(2.4rem, 7vw, 3.6rem);
+    font-weight: 600;
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.75rem;
+  }
+  .brand span {
+    display: block;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 0.3em;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.55rem;
+  }
+
+  .meta {
+    margin: 0 0 1.1rem;
+    font-size: 0.84rem;
+    color: var(--ink-mute);
+  }
+  .meta b {
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  .process {
+    margin: 0;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--line-strong);
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+  }
+  .process .arrow {
+    color: var(--culture);
+    margin: 0 0.25rem;
+    font-weight: 600;
+  }
+
+  section { margin: 0 0 2.75rem; }
+
+  h2 {
+    font-family: "Literata", serif;
+    font-size: 1.45rem;
+    font-weight: 600;
+    margin: 0 0 0.65rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.65rem;
+  }
+  h2::before {
+    content: "";
+    width: 0.7rem;
+    height: 0.7rem;
+    background: var(--accent);
+    transform: translateY(0.05rem);
+  }
+
+  .lede, .note {
+    margin: 0 0 1.2rem;
+    color: var(--ink-soft);
+    max-width: 40rem;
+  }
+
+  .stage {
+    margin: 1.4rem 0 0.45rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--culture);
+  }
+  .stage.option {
+    margin-top: 0.95rem;
+    color: var(--accent-deep);
+    letter-spacing: 0.1em;
+  }
+
+  .ingredients {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: var(--panel);
+    border: 1px solid var(--line);
+  }
+  .ingredients li {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 1rem;
+    padding: 0.65rem 0.85rem;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.95rem;
+  }
+  .ingredients li:last-child { border-bottom: 0; }
+  .ingredients .qty {
+    color: var(--accent-deep);
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+  }
+  .ingredients .name { color: var(--ink); }
+
+  .recipe-block { margin: 0 0 1.75rem; }
+  .recipe-block h3 {
+    font-family: "Literata", serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0 0 0.55rem;
+  }
+
+  .table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--line-strong);
+    background: var(--panel);
+  }
+
+  table.recipe {
+    width: 100%;
+    min-width: 36rem;
+    border-collapse: collapse;
+    empty-cells: show;
+    font: 0.8rem / 1.3 "Space Grotesk", sans-serif;
+    color: var(--ink);
+  }
+  table.recipe td {
+    border-right: 1px solid var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+    padding: 0.45rem 0.55rem;
+    vertical-align: middle;
+  }
+  table.recipe td.banner {
+    text-align: center;
+    color: var(--accent-deep);
+    background: var(--banner);
+    font-size: 0.75rem;
+    letter-spacing: 0.03em;
+    font-weight: 500;
+  }
+  table.recipe td.ingredient .amount {
+    color: var(--accent-deep);
+    font-weight: 600;
+  }
+  table.recipe td.action { text-align: center; }
+  table.recipe td.righthide {
+    position: relative;
+    border-right: 0 hidden;
+  }
+  @supports (font: -apple-system-body) {
+    table.recipe td.righthide::after {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      right: -1px;
+      bottom: 1px;
+      width: 2px;
+      background: var(--panel);
+      pointer-events: none;
+    }
+  }
+  table.recipe td.vertical {
+    text-align: center;
+    vertical-align: middle;
+    background: var(--vertical);
+  }
+  @supports not (-moz-appearance: none) {
+    @supports not (-webkit-touch-callout: none) {
+      table.recipe td.vertical {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+      }
+    }
+  }
+
+  .timeline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.55rem;
+    margin: 0.75rem 0 0;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+  }
+  .timeline .arrow {
+    color: var(--culture);
+    font-weight: 600;
+  }
+  .aside {
+    margin: 0.65rem 0 0;
+    font-size: 0.85rem;
+    color: var(--ink-mute);
+  }
+
+  .practices {
+    margin: 0;
+    padding-left: 1.15rem;
+    display: grid;
+    gap: 0.45rem;
+    color: var(--ink-soft);
+    max-width: 42rem;
+  }
+  .practices strong { color: var(--ink); font-weight: 600; }
+
+  .benefits {
+    display: grid;
+    gap: 0.85rem;
+  }
+  .benefit {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    padding: 0.95rem 1rem;
+  }
+  .benefit h3 {
+    margin: 0 0 0.4rem;
+    font-family: "Literata", serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+  .benefit ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    display: grid;
+    gap: 0.3rem;
+  }
+  .benefit li {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+  .benefit li::marker { color: var(--accent); }
+  .benefit strong { color: var(--ink); font-weight: 600; }
+  i { font-style: italic; }
+
+  footer {
+    margin-top: 0.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  @media (max-width: 30rem) {
+    header {
+      padding: 1.25rem 1rem;
+      box-shadow: 5px 5px 0 var(--shadow);
+    }
+    .ingredients li {
+      grid-template-columns: 1fr;
+      gap: 0.15rem;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="toolbar">
+  <nav class="site-nav" aria-label="Site">
+    <a href="../">Home</a>
+    <a href="./" aria-current="page">Recipes</a>
+  </nav>
+  <button type="button" id="theme-toggle" aria-live="polite">
+    Theme: <span class="pref" id="theme-pref-label">system</span>
+  </button>
+</div>
+
+<main class="page">
+  <header>
+    <h1 class="brand"><span>GLP-1 support</span>Fermented Garlic Paste</h1>
+    <p class="meta"><b>GLP-1</b> · Live culture · Raw finishing · Not cooked</p>
+    <p class="process">
+      Dry garlic powder + salt brine
+      <span class="arrow">&rarr;</span>
+      <i>L. plantarum</i> (or backslop)
+      <span class="arrow">&rarr;</span>
+      airlock 3–4 days
+      <span class="arrow">&rarr;</span>
+      fridge paste, stirred in raw
+    </p>
+  </header>
+
+  <section>
+    <h2>Background</h2>
+    <p class="lede">Garlic is already a dense organosulfur food. Lactic fermentation with <i>Lactobacillus plantarum</i> acidifies the paste so the culture can hold the jar, and it shifts some of garlic’s harsh, heat-sensitive chemistry toward more stable, easier-to-absorb metabolites (often discussed as S-allyl cysteine and related postbiotics). Less raw bite, more tang, meant for the lower gut — not a hot pan.</p>
+    <p class="lede">Powder is practical: high surface area, no peeling, and an easy 2% salt target. Garlic is antimicrobial, so a first batch needs a concentrated inoculant. Later batches can be backslopped a few generations with a little honey or sugar as a fuel bridge, then reset before kitchen yeasts take over. This is a salted lactic paste, packed anaerobic and kept cold after it sours — not garlic-in-oil.</p>
+  </section>
+
+  <section>
+    <h2>Ingredients</h2>
+    <p class="lede">Use unchlorinated water and garlic powder with no anti-caking agents. Always pack with a clean spoon and an airlock lid.</p>
+
+    <p class="stage">Master ingredient base</p>
+    <ul class="ingredients">
+      <li><span class="qty">1/2 cup</span><span class="name">dry garlic powder (organic, pure; no anti-caking agents)</span></li>
+      <li><span class="qty">1/2–3/4 cup</span><span class="name">warm filtered water (just enough for a thick paste)</span></li>
+      <li><span class="qty">1 tsp</span><span class="name">pink Himalayan salt, ground fine (~5–6 g; about 2% salinity)</span></li>
+    </ul>
+
+    <p class="stage option">Option A — starting fresh (from powder)</p>
+    <ul class="ingredients">
+      <li><span class="qty">base</span><span class="name">master ingredient base above</span></li>
+      <li><span class="qty">1/8 tsp</span><span class="name"><i>L. plantarum</i> powder (Foods For Gut; small “Tad” scoop)</span></li>
+      <li><span class="qty">1 jar</span><span class="name">sterilized mason jar with airtight fermentation lid or silicone airlock</span></li>
+    </ul>
+    <p class="aside">First batch, or a reset to 100% culture purity.</p>
+
+    <p class="stage option">Option B — sustainable backslopping</p>
+    <ul class="ingredients">
+      <li><span class="qty">base</span><span class="name">master ingredient base above</span></li>
+      <li><span class="qty">1 Tbs.</span><span class="name">active fermented garlic paste from the previous batch</span></li>
+      <li><span class="qty">1/2 tsp</span><span class="name">raw honey or organic sugar (fuel bridge)</span></li>
+      <li><span class="qty">1 jar</span><span class="name">sterilized glass jar with airlock lid</span></li>
+    </ul>
+    <p class="aside">Do not backslop past 4 or 5 generations. Then return to Option A.</p>
+  </section>
+
+  <section>
+    <h2>Recipe</h2>
+    <p class="note">Read left to right. Merged cells mean ingredients are combined or processed together.</p>
+
+    <div class="recipe-block">
+      <h3>Option A — Starting Fresh</h3>
+      <div class="table-scroll">
+        <table class="recipe">
+          <tbody>
+            <tr>
+              <td class="banner" colspan="6">Dark cupboard · 70°F–75°F · airlock lid · 3 full days</td>
+            </tr>
+            <tr>
+              <td class="ingredient"><span class="amount">1/2 cup</span> warm filtered water</td>
+              <td class="action" rowspan="3">whisk until dissolved</td>
+              <td class="action" rowspan="4">stir to a smooth thick paste; add water 1 Tbs. at a time if chalky</td>
+              <td class="vertical" rowspan="4">pack jar; press out air pockets</td>
+              <td class="vertical" rowspan="4">seal anaerobic</td>
+              <td class="vertical" rowspan="4">ferment 3 days; fridge when pickle-sharp</td>
+            </tr>
+            <tr>
+              <td class="ingredient"><span class="amount">1 tsp</span> fine pink Himalayan salt</td>
+            </tr>
+            <tr>
+              <td class="ingredient"><span class="amount">1/8 tsp</span> <i>L. plantarum</i> powder</td>
+            </tr>
+            <tr>
+              <td class="ingredient"><span class="amount">1/2 cup</span> dry garlic powder</td>
+              <td class="righthide"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="timeline">
+        <span>Dissolve salt + culture</span>
+        <span class="arrow">&rarr;</span>
+        <span>Thick paste</span>
+        <span class="arrow">&rarr;</span>
+        <span>Pack anaerobic</span>
+        <span class="arrow">&rarr;</span>
+        <span>3 days at 70–75°F</span>
+        <span class="arrow">&rarr;</span>
+        <span>Fridge</span>
+      </p>
+      <p class="aside">Target water is ½ cup; go up toward ¾ cup only if the powder stays dry and chalky.</p>
+    </div>
+
+    <div class="recipe-block">
+      <h3>Option B — Backslopping</h3>
+      <div class="table-scroll">
+        <table class="recipe">
+          <tbody>
+            <tr>
+              <td class="banner" colspan="6">Lower starting density · 3 to 4 full days until robust and sour</td>
+            </tr>
+            <tr>
+              <td class="ingredient"><span class="amount">1/2 cup</span> warm filtered water</td>
+              <td class="action" rowspan="4">whisk until combined</td>
+              <td class="action" rowspan="5">stir to a thick paste; pack, press out bubbles</td>
+              <td class="vertical" rowspan="5">seal airlock</td>
+              <td class="vertical" rowspan="5">counter 3–4 days</td>
+              <td class="vertical" rowspan="5">refrigerate</td>
+            </tr>
+            <tr>
+              <td class="ingredient"><span class="amount">1 tsp</span> fine pink Himalayan salt</td>
+            </tr>
+            <tr>
+              <td class="ingredient"><span class="amount">1/2 tsp</span> raw honey or organic sugar</td>
+            </tr>
+            <tr>
+              <td class="ingredient"><span class="amount">1 Tbs.</span> active fermented paste</td>
+            </tr>
+            <tr>
+              <td class="ingredient"><span class="amount">1/2 cup</span> dry garlic powder</td>
+              <td class="righthide"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="aside">Honey or sugar is a fuel bridge so the carry-over culture can overcome garlic’s natural antimicrobials. Reset with Option A every 4th batch.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Best practices</h2>
+    <ul class="practices">
+      <li><strong>Never cook the paste.</strong> Stir it raw into foods after they come off the heat so live bacteria and sensitive postbiotics survive.</li>
+      <li><strong>4-batch rule.</strong> Do not backslop past 4 or 5 generations. Wild yeasts will drift the culture. Reset with fresh <i>L. plantarum</i> powder.</li>
+      <li><strong>Strictly anaerobic.</strong> Pack tightly; use an airlock. Oxygen favors molds and a dirty ferment.</li>
+      <li><strong>Storage.</strong> Refrigerated, 2–3 months if every scoop uses a perfectly clean spoon.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Functional Benefits</h2>
+    <div class="benefits">
+      <article class="benefit">
+        <h3>Live lactic culture</h3>
+        <ul>
+          <li><strong>Probiotic:</strong> <i>L. plantarum</i> is acid-tolerant; a dense start helps it outcompete garlic’s own antimicrobials</li>
+          <li><strong>Postbiotic acid:</strong> lactic acid lowers pH, preserves the paste, and keeps the ferment on a clean lactic path</li>
+          <li><strong>Fuel, not dessert:</strong> the honey/sugar in Option B is a bridge for the culture, not a sweet condiment</li>
+        </ul>
+      </article>
+
+      <article class="benefit">
+        <h3>Garlic organosulfurs, fermented</h3>
+        <ul>
+          <li>Dry garlic still carries the alliin / allicin family; lactic time in an acidic paste is associated with more stable, water-soluble metabolites (including S-allyl cysteine in fermented-garlic research)</li>
+          <li>Finishing the paste <strong>raw and cold</strong> avoids destroying heat-sensitive sulfur compounds and the live culture at once</li>
+        </ul>
+      </article>
+
+      <article class="benefit">
+        <h3>Gut–metabolic framing (GLP-1)</h3>
+        <ul>
+          <li>Built as an <strong>anaerobic lactic paste</strong> meant for the lower gut, not as a cooked seasoning</li>
+          <li>Some garlic fractions and <i>L. plantarum</i> metabolites are studied in connection with incretin pathways (including DPP-4–related discussion in the functional-food literature). That is a research direction, not a medical claim or a substitute for prescribed GLP-1 medicines</li>
+        </ul>
+      </article>
+
+      <article class="benefit">
+        <h3>Culinary use</h3>
+        <ul>
+          <li>Sharp, pickle-like paste for beans, rice, and dressings after they leave the heat</li>
+          <li>Small spoonfuls go a long way; salinity is part of preservation, so taste before adding extra salt to the plate</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <footer>Made at home · Keep cool · Live cultures</footer>
+</main>
+
+<script>
+  (function () {
+    var t = window.__recipesTheme;
+    var label = document.getElementById("theme-pref-label");
+    var btn = document.getElementById("theme-toggle");
+
+    function sync() {
+      label.textContent = t.pref;
+      btn.setAttribute("aria-label", t.label());
+      btn.title = t.label();
+    }
+
+    sync();
+    btn.addEventListener("click", function () {
+      t.cycle();
+      sync();
+    });
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () {
+      if (t.pref === "system") t.apply("system");
+    });
+  })();
+</script>
+</body>
+</html>
