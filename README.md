@@ -6,9 +6,10 @@ This is my little corner of the internet, where I collect things I want to share
 
 ## Pages
 
-- [Recipes](https://arcmode.github.io/recipes/)
 - [Puzzles](https://arcmode.github.io/puzzles/)
+- [Recipes](https://arcmode.github.io/recipes/)
 - [Science](https://arcmode.github.io/science/)
+- [The Way](https://arcmode.github.io/the-way/)
 
 ## Contact
 
