@@ -2,6 +2,8 @@ Welcome
 
 # Hey there
 
+This is my little corner of the internet, where I collect things I want to share with friends.
+
 ## Pages
 
 - [Recipes](https://arcmode.github.io/recipes/)
