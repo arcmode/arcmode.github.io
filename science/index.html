@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Recipes</title>
+<title>Science</title>
 <script>
   (function () {
     var key = "recipes-theme";
-    var pref = localStorage.getItem(key) || localStorage.getItem("naranjita-theme") || "system";
+    var pref = localStorage.getItem(key) || "system";
     function resolved(p) {
       if (p === "light" || p === "dark") return p;
       return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
     }
     document.documentElement.setAttribute("data-theme", resolved(pref));
     document.documentElement.setAttribute("data-theme-pref", pref);
-    window.__recipesTheme = {
+    window.__siteTheme = {
       pref: pref,
       resolved: resolved,
       apply: function (p) {
@@ -35,9 +35,9 @@
     };
   })();
 </script>
-<link rel="preload" href="fonts/Literata.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/SpaceGrotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="preload" href="../recipes/fonts/Literata.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../recipes/fonts/SpaceGrotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../recipes/fonts/fonts.css">
 <style>
   :root,
   html[data-theme="light"] {
@@ -204,16 +204,6 @@
     margin-bottom: 0.55rem;
   }
 
-  .meta {
-    margin: 0 0 1.1rem;
-    font-size: 0.84rem;
-    color: var(--ink-mute);
-  }
-  .meta b {
-    color: var(--ink-soft);
-    font-weight: 500;
-  }
-
   .lede {
     margin: 0;
     padding-top: 1rem;
@@ -229,7 +219,7 @@
     font-family: "Literata", serif;
     font-size: 1.45rem;
     font-weight: 600;
-    margin: 0 0 0.65rem;
+    margin: 0 0 0.85rem;
     display: flex;
     align-items: baseline;
     gap: 0.65rem;
@@ -242,22 +232,7 @@
     transform: translateY(0.05rem);
   }
 
-  .note {
-    margin: 0 0 1.2rem;
-    color: var(--ink-soft);
-    max-width: 40rem;
-  }
-
-  .stage {
-    margin: 0 0 0.45rem;
-    font-size: 0.72rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    font-weight: 600;
-    color: var(--culture);
-  }
-
-  .recipe-list {
+  .link-list {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -265,7 +240,7 @@
     gap: 0.85rem;
   }
 
-  .recipe-list a {
+  .link-list a {
     display: block;
     background: var(--panel);
     border: 1px solid var(--line);
@@ -275,12 +250,12 @@
     text-decoration: none;
     transition: border-color 0.15s ease;
   }
-  .recipe-list a:hover {
+  .link-list a:hover {
     border-color: var(--accent);
     border-left-color: var(--accent);
   }
 
-  .recipe-list strong {
+  .link-list strong {
     display: block;
     font-family: "Literata", serif;
     font-size: 1.15rem;
@@ -288,25 +263,10 @@
     margin-bottom: 0.35rem;
   }
 
-  .recipe-list .blurb {
+  .link-list span {
     display: block;
     font-size: 0.92rem;
     color: var(--ink-soft);
-    margin-bottom: 0.65rem;
-  }
-
-  .recipe-list .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem 0.75rem;
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
-  }
-  .recipe-list .tags b {
-    color: var(--accent-deep);
-    font-weight: 600;
   }
 
   footer {
@@ -331,9 +291,9 @@
 <div class="toolbar">
   <nav class="site-nav" aria-label="Site">
     <a href="../">Home</a>
-    <a href="./" aria-current="page">Recipes</a>
+    <a href="../recipes/">Recipes</a>
     <a href="../puzzles/">Puzzles</a>
-    <a href="../science/">Science</a>
+    <a href="./" aria-current="page">Science</a>
   </nav>
   <button type="button" id="theme-toggle" aria-live="polite">
     Theme: <span class="pref" id="theme-pref-label">system</span>
@@ -342,39 +302,28 @@
 
 <main class="page">
   <header>
-    <h1 class="brand"><span>Homemade</span>Recipes</h1>
-    <p class="meta"><b>Small-batch</b> · Functional · Made at home</p>
-    <p class="lede">"Therefore, whether you are eating or drinking or doing anything else, do all things for God's glory." — 1 Corinthians 10:31.</p>
+    <h1 class="brand"><span>Found</span>Science</h1>
+    <p class="lede">Science sites I have found and like — not built by me.</p>
   </header>
 
   <section>
-    <h2>All recipes</h2>
-    <p class="note">Open a recipe to see ingredients, flowchart method tables, and functional notes.</p>
-    <p class="stage">Published</p>
-    <ul class="recipe-list">
+    <h2>Sites</h2>
+    <ul class="link-list">
       <li>
-        <a href="raw-tri-biotic-naranjita.html">
-          <strong>The Raw Tri-Biotic Naranjita</strong>
-          <span class="blurb">Orange-peel ferment with <i>L. plantarum</i>, then a white, dark, or milk chocolate coat.</span>
-          <span class="tags"><b>Sugar-free</b> · Zero glycemic · Live cultures</span>
-        </a>
-      </li>
-      <li>
-        <a href="fermented-garlic-paste.html">
-          <strong>Fermented Garlic Paste</strong>
-          <span class="blurb">Raw <i>L. plantarum</i> garlic paste, finished cold for GLP-1-minded use — stir in after cooking.</span>
-          <span class="tags"><b>GLP-1</b> · Live cultures · Raw finishing</span>
+        <a href="https://ptree.org/" rel="noopener noreferrer">
+          <strong>Ptree</strong>
+          <span>Interactive phylogenetic tree of life, from taxonomy and descent down to traits.</span>
         </a>
       </li>
     </ul>
   </section>
 
-  <footer>Made at home · Keep cool · Live cultures</footer>
+  <footer>Nevada City, CA</footer>
 </main>
 
 <script>
   (function () {
-    var t = window.__recipesTheme;
+    var t = window.__siteTheme;
     var label = document.getElementById("theme-pref-label");
     var btn = document.getElementById("theme-toggle");
 

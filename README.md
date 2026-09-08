@@ -5,7 +5,8 @@ Welcome
 ## Pages
 
 - [Recipes](https://arcmode.github.io/recipes/)
-- [Favorite Websites](https://arcmode.github.io/favorite-websites/)
+- [Puzzles](https://arcmode.github.io/puzzles/)
+- [Science](https://arcmode.github.io/science/)
 
 ## Contact
 
