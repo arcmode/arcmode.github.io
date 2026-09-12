@@ -340,22 +340,12 @@
     font-weight: 600;
   }
   table.recipe td.action { text-align: center; }
-  table.recipe td.righthide {
-    position: relative;
-    border-right: 0 hidden;
+  table.recipe td.skip {
+    border-right: 0;
+    padding: 0;
   }
-  @supports (font: -apple-system-body) {
-    table.recipe td.righthide::after {
-      content: "";
-      position: absolute;
-      z-index: 1;
-      top: 0;
-      right: -1px;
-      bottom: 1px;
-      width: 2px;
-      background: var(--panel);
-      pointer-events: none;
-    }
+  table.recipe tbody tr:not(:last-child) td.skip:not(.skip-bottom) {
+    border-bottom: 0;
   }
   table.recipe td.vertical {
     text-align: center;
@@ -526,7 +516,7 @@
 
   <section>
     <h2>Recipe</h2>
-    <p class="note">Read left to right. Merged cells mean ingredients are combined or processed together.</p>
+    <p class="note">Read left to right. Merged cells mean ingredients are combined or processed together. An ingredient that starts later joins at the step covering its row.</p>
 
     <div class="recipe-block">
       <h3>Fermented Orange Peels</h3>
@@ -540,7 +530,7 @@
               <td class="ingredient"><span class="amount">peels from 4–5</span> organic oranges</td>
               <td class="action">scrub thoroughly</td>
               <td class="action">slice into 2–3&nbsp;mm needle strips</td>
-              <td class="righthide"></td>
+              <td class="skip"></td>
               <td class="action" rowspan="5">push peels under surface; stir 2–3×/day</td>
               <td class="vertical" rowspan="5">ferment RT 4–7 days (open lid or cloth)</td>
               <td class="vertical" rowspan="5">drain; reserve tonic</td>
@@ -558,7 +548,7 @@
             </tr>
             <tr>
               <td class="ingredient"><span class="amount">1/2 tsp.</span> <i>L. plantarum</i> powder</td>
-              <td class="righthide"></td>
+              <td class="skip"></td>
             </tr>
           </tbody>
         </table>
@@ -595,7 +585,7 @@
             </tr>
             <tr>
               <td class="ingredient">drained fermented peels</td>
-              <td></td>
+              <td class="skip"></td>
             </tr>
           </tbody>
         </table>
@@ -620,15 +610,15 @@
             </tr>
             <tr>
               <td class="ingredient"><span class="amount">3 Tbs.</span> inulin powder</td>
-              <td></td>
+              <td class="skip"></td>
             </tr>
             <tr>
               <td class="ingredient"><span class="amount">1/8 tsp.</span> monk fruit powder</td>
-              <td></td>
+              <td class="skip skip-bottom"></td>
             </tr>
             <tr>
               <td class="ingredient">syrup-glazed orange strips</td>
-              <td colspan="2"></td>
+              <td class="skip" colspan="2"></td>
             </tr>
           </tbody>
         </table>
@@ -652,19 +642,19 @@
             </tr>
             <tr>
               <td class="ingredient"><span class="amount">3 Tbs.</span> cacao powder</td>
-              <td></td>
+              <td class="skip"></td>
             </tr>
             <tr>
               <td class="ingredient"><span class="amount">3 Tbs.</span> inulin powder</td>
-              <td></td>
+              <td class="skip"></td>
             </tr>
             <tr>
               <td class="ingredient"><span class="amount">1/8 tsp.</span> monk fruit powder</td>
-              <td></td>
+              <td class="skip skip-bottom"></td>
             </tr>
             <tr>
               <td class="ingredient">syrup-glazed orange strips</td>
-              <td colspan="2"></td>
+              <td class="skip" colspan="2"></td>
             </tr>
           </tbody>
         </table>
@@ -688,23 +678,23 @@
             </tr>
             <tr>
               <td class="ingredient"><span class="amount">2 Tbs.</span> cacao powder</td>
-              <td></td>
+              <td class="skip"></td>
             </tr>
             <tr>
               <td class="ingredient"><span class="amount">2 Tbs.</span> cultured buttermilk powder</td>
-              <td></td>
+              <td class="skip"></td>
             </tr>
             <tr>
               <td class="ingredient"><span class="amount">3 Tbs.</span> inulin powder</td>
-              <td></td>
+              <td class="skip"></td>
             </tr>
             <tr>
               <td class="ingredient"><span class="amount">1/8 tsp.</span> monk fruit powder</td>
-              <td></td>
+              <td class="skip skip-bottom"></td>
             </tr>
             <tr>
               <td class="ingredient">syrup-glazed orange strips</td>
-              <td colspan="2"></td>
+              <td class="skip" colspan="2"></td>
             </tr>
           </tbody>
         </table>
