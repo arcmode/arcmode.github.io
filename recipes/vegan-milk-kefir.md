@@ -1,6 +1,6 @@
-# Vegan Kefir
+# Vegan Milk Kefir
 
-*Pea milk · Low alcohol · Transitioned milk kefir grains*
+*Pea milk · Transitioned milk kefir grains*
 
 Milk kefir grains cultured on a supplemented pea-milk base: a 5-day dairy taper, then a long-term vegan formula aimed at grain growth with only a trace of alcohol.
 
@@ -59,7 +59,7 @@ Make this each day you need plant base. One batch is 500 mL — enough for any s
 
 ## Recipe
 
-Flowchart tables (Cooking For Engineers style) live on the [HTML page](vegan-kefir.html). Method below mirrors those tables.
+Flowchart tables (Cooking For Engineers style) live on the [HTML page](vegan-milk-kefir.html). Method below mirrors those tables.
 
 ### 1. Initial health evaluation
 
