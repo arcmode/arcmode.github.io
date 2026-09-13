@@ -247,6 +247,18 @@
     color: var(--ink-soft);
     max-width: 40rem;
   }
+  .note a, .credit a {
+    color: var(--accent-deep);
+    text-underline-offset: 0.15em;
+  }
+  .note a:hover, .credit a:hover { color: var(--accent); }
+
+  .credit {
+    margin: 0 0 1rem;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    max-width: 40rem;
+  }
 
   .stage {
     margin: 0 0 0.45rem;
@@ -384,6 +396,7 @@
     </ul>
   </section>
 
+  <p class="credit">Method tables follow Michael Chu's tabular recipe notation from <a href="https://cookingforengineers.com/" rel="noopener noreferrer" target="_blank">Cooking for Engineers</a>.</p>
   <footer>Made at home · Keep cool · Live cultures</footer>
 </main>
 
